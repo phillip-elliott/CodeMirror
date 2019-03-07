@@ -33,17 +33,7 @@
     "separate", "some", "subtype", "synchronized",
     "tagged", "task", "terminate", "then",
     "type", "until", "use", "when",
-    "while", "with", "True", "False"
-  ])
-
-  const builtins = wordRegexp([
-    "Integer", "Float", "Duration", "Character", 
-    "String", "Boolean", "Long_Integer", "Long_Float",
-    "Long_Long_Float", "Long_Long_Integer", "Natural",
-    "Operation", "Positive", "Short", "Short_Integer", 
-    "Short_Short_Integer", "Token", "Token_Kind", "Value",
-    "Wide_Character", "Wide_String", "Wide_Wide_Character",
-    "Wide_Wide_String"
+    "while", "with"
   ])
 
   const wordOperators = wordRegexp(["and", "or", "xor", "not", "and then", "or else", "abs", "mod", "rem", "in", "not in"])
@@ -53,7 +43,7 @@
   const numberStart = /[\d\.]/
   const number = /^(?:0x[a-f\d]+|0b[01]+|(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)(u|ll?|l|f)?/i
   const identifiers = /^[A-Za-z][_A-Za-z0-9\u00A1-\uFFFF]*/
-  const declaration = /^[:]\s*[_A-Za-z0-9\u00A1-\uFFFF]*/
+  const isChar = /('([^']|[']{2})')/
 
 
   CodeMirror.registerHelper("hintWords", "ada", keywords);
@@ -66,14 +56,13 @@
         return "keyword";
       }
 
-      if(stream.match(declaration)) {
-        console.log(stream.current())
-        return "builtin"
+      if(stream.match(identifiers)) {
+        if (state.lastToken == "procedure" || state.lastToken == "body" || state.lastToken == "function" || state.lastToken == "type" || state.lastToken == "end")
+          return "def"
       }
 
-      if(stream.match(identifiers)) {
-        if (state.lastToken == "procedure" || state.lastToken == "body" || state.lastToken == "function" || state.lastToken == "type")
-          return "def"
+      if(stream.match(isChar)) {
+        return "string"
       }
 
       let ch = stream.next();
@@ -84,7 +73,7 @@
         return "comment";
       }
 
-      if (ch == '"' || ch == '\'') {
+      if (ch == '"') {
         return tokenAtString(stream, ch)
       }
 
