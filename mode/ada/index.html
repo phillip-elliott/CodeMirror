@@ -26,7 +26,7 @@
 </div>
 
 <article>
-<h2>Ada mode</h2>
+  <h2>Ada mode</h2>
 
   <div>
     <textarea id="code" name="code">
@@ -129,21 +129,25 @@ package body Screen_Output is
   end Pause;
 
 end Screen_Output;
-      </textarea>
-    </div>
+    </textarea>
+  </div>
 
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: {name: "ada",
-               extraKeywords: ["trickytest"],
-               customBuiltins: ["String"]},
-        lineNumbers: true,
-        indentUnit: 2,
-        matchBrackets: true
+  <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      mode: {name: "ada",
+            extraKeywords: ["trickytest"],
+            customBuiltins: ["String"]},
+      lineNumbers: true,
+      indentUnit: 2,
+      matchBrackets: true
     });
 
-    </script>
-
-    <p><strong>MIME types defined:</strong> <code>text/x-ada</code>.</p>
-  </article>
+  </script>
+  <h2>Configuration Options for Ada mode:</h2>
+  <ul>
+    <li>extraKeywords - list of string - List of extra words to consider as keywords</li>
+    <li>customBuiltins - list of string - List of extra words to consider as builtins</li>
+  </ul>
+  <p><strong>MIME types defined:</strong> <code>text/x-ada</code>.</p>
+</article>
