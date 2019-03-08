@@ -5,8 +5,10 @@
 <link rel=stylesheet href="../../doc/docs.css">
 
 <link rel="stylesheet" href="../../lib/codemirror.css">
+<link rel="stylesheet" href="../../addon/hint/show-hint.css">
 <script src="../../lib/codemirror.js"></script>
 <script src="../../addon/edit/matchbrackets.js"></script>
+<script src="../../addon/hint/show-hint.js"></script>
 <script src="ada.js"></script>
 <style>.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
 <div id=nav>
@@ -45,7 +47,7 @@ package body Screen_Output is
   ---------
 
   procedure Msg
-    (S1       : String;
+    (S1      : String;
     S2       : String  := "";
     End_Line : Boolean := True)
   is
@@ -53,7 +55,7 @@ package body Screen_Output is
     Put (S1);
     Put (S2);
     if End_Line then
-        New_Line;
+      New_Line;
     end if;
   end Msg;
 
@@ -64,7 +66,7 @@ package body Screen_Output is
   procedure Debug_Msg (S : String) is
   begin
     if not Debug_On then
-        return;
+      return;
     end if;
 
     Put ("DEBUG: ");
@@ -95,7 +97,7 @@ package body Screen_Output is
 
   begin
     if Pos = 0 then
-        Pos := Input.Column_Number;
+      Pos := Input.Column_Number;
     end if;
 
     Put ("sdc:");
@@ -103,7 +105,7 @@ package body Screen_Output is
 
     Put ("sdc:");
     for I in 1 .. Pos - 1 loop
-        Put ("-");
+      Put ("-");
     end loop;
     
     Put ('''');
@@ -134,10 +136,10 @@ end Screen_Output;
     <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         mode: {name: "ada",
-               version: 3,
-               singleLineStringErrors: false},
+               extraKeywords: ["trickytest"],
+               customBuiltins: ["String"]},
         lineNumbers: true,
-        indentUnit: 4,
+        indentUnit: 2,
         matchBrackets: true
     });
 
